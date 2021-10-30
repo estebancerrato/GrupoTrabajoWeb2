@@ -32,7 +32,7 @@
                         <td>$data[alumno_grado]</td>
                         <td>$data[alumno_fecha_matricula]</td>
                         <td>$data[alumno_telefono]</td>
-                        <td>$data[alumno_direccion]</td>
+                        
                     </form>
                 </tr>
                 ";
