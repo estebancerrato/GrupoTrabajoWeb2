@@ -45,7 +45,7 @@ if($accion=="guardar")
 		}
 	
 
-
+echo="HOLA MUNDO"
 }
 
 
