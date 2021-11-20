@@ -1,5 +1,0 @@
-Directorio
-https://proyectofinalweb1-esteban-cerrato.000webhostapp.com/Examen_primer_parcial_web2/
-
-Pagina Principal
-https://proyectofinalweb1-esteban-cerrato.000webhostapp.com/Examen_primer_parcial_web2/principal.php
