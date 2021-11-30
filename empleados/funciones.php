@@ -793,25 +793,6 @@
                 ";
             }
         }
-
-
-        public function obtenerCajeroCombobox(){
-            include("conexion.php");
-            $sql = "select 
-            empleado_cedula,
-            concat(empleado_primer_nombre, ' ',empleado_segundo_nombre,' ',empleado_primer_apellido, ' ',empleado_segundo_apellido) as nombres
-            from tbl_empleados e 
-            INNER JOIN tbl_cargo c on e.cargo_codigo = c.cargo_codigo
-            WHERE UPPER(c.cargo_nombre)  = UPPER('CAJERO')";
-            $query = mysqli_query($con, $sql)
-            or die('error: '.mysqli_error($con));  
-            while($columna = mysqli_fetch_assoc($query)){
-                echo "
-                <option value='".$columna["empleado_cedula"]."'>".$columna["nombres"]."</option>
-                ";
-            }
-        }
-
         
         public function obtenerEstacionCombobox(){
             include("conexion.php");
@@ -836,6 +817,42 @@
                 ";
             }
         }
+
+        public function obtenerClientesCombobox(){
+            include("conexion.php");
+            $sql = "SELECT cliente_cedula, CONCAT(cliente_primer_nombre,' ',cliente_segundo_nombre,' ',cliente_primer_apellido,' ',cliente_segundo_apellido) AS ClienteNombre FROM tbl_clientes";
+            $query = mysqli_query($con, $sql)
+            or die('error: '.mysqli_error($con));  
+            while($columna = mysqli_fetch_assoc($query)){
+                echo "
+                <option value='".$columna["cliente_cedula"]."'>".$columna["ClienteNombre"]."</option>
+                ";
+            }
+        }        
+
+        public function obtenerTipoPaquetesCombobox(){
+            include("conexion.php");
+            $sql = "SELECT tipo_paquete_codigo,tipo_paquete_nombre FROM tbl_tipo_paquete";
+            $query = mysqli_query($con, $sql)
+            or die('error: '.mysqli_error($con));  
+            while($columna = mysqli_fetch_assoc($query)){
+                echo "
+                <option value='".$columna["tipo_paquete_codigo"]."'>".$columna["tipo_paquete_nombre"]."</option>
+                ";
+            }
+        }                
+
+        public function obtenerBusesCombobox(){
+            include("conexion.php");
+            $sql = "SELECT bus_codigo,CONCAT(bus_marca,' ',bus_modelo, ' ',bus_placa) AS BusNombre FROM tbl_buses";
+            $query = mysqli_query($con, $sql)
+            or die('error: '.mysqli_error($con));  
+            while($columna = mysqli_fetch_assoc($query)){
+                echo "
+                <option value='".$columna["bus_codigo"]."'>".$columna["BusNombre"]."</option>
+                ";
+            }
+        }                        
 
   
     }
