@@ -1,0 +1,11 @@
+.tarjeta{
+    flex-basis: calc(33.3% - 1rem);
+    background: linear-gradient(70deg, #3dc0f0, #3df0ba);
+    border-radius: 15px;
+}
+
+.img-tarjeta{
+    width: 100px;
+    height: 100px;
+    padding-top: 10px;
+}

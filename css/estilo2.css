@@ -1,0 +1,43 @@
+
+.login
+{
+    width: 320px;
+    height: 420px;
+    background: linear-gradient(rgb(0, 0, 0,0.3),rgb(0, 0, 0,0.3));
+    color:cyan;
+    top:50%;
+    left:50%;
+    position: absolute;
+    transform:translate(-50%,-50%);
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.icono_login
+{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    position: absolute;
+    top:-20%;
+    left: calc(50% - 50px);
+}
+
+h2 {
+    text-align: center;
+    margin-top: 30px;
+    color: cyan;
+}
+
+
+.tarjeta{
+    flex-basis: calc(33.3% - 1rem);
+    background: linear-gradient(70deg, #3dc0f0, #3df0ba);
+    border-radius: 15px;
+}
+
+.img-tarjeta{
+    width: 100px;
+    height: 100px;
+    padding-top: 10px;
+}
