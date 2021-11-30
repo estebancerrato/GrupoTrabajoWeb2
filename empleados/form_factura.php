@@ -45,90 +45,107 @@
         <div>
                 <h3 style="text-align:center;">Facturaciòn de Boletos</h3>
         </div>
-            <form name='formulario' id='formulario' method="POST" action='clientes.php'> <br><br>
-                        <input type="hidden" name="accion" id="accion" value="">
-        
+        <?php
+            if(isset($_POST['accion'],$_GET['id'])){
+                if(($_POST['accion']==2)&&($_GET['id']!='')){
+                    $cargoID = $_GET['id'];
+                    $data=($objetoTabla->obtenerCargos($cargoID));  
                     
-            <div class="row ">
-                <div class="col-2 ">
-                <label  class="form-label ">Numero de Factura</label>
-                    </div>
-                <div class="col-4">
-                    <input class="form-control"   name="numer_factura" id="numer_factura" type="text"  aria-label="default input example">
-                </div>
+                    $cadena="id=x&accion=2&dir=addeditFactura&u=1";
 
-                <div class="col-2">
-                    <label  class="form-label">Fecha Factura</label>
-                </div>
-                <div class="col-4">
-                    <input class="form-control"   name="numer_factura" id="numer_factura" type="date"  aria-label="default input example">
-                </div>
-            </div><br>
 
-            <div class="row ">
-                    <div class="col-2">
-                        <label  class="form-label">Cliente</label>
-                    </div>
-                    <div class="col-4">
-                    <select name="cbmcliente" id="cbmcliente"  class="form-control">
-                          <option value="0" disabled selected > Seleccionar</option>
-                        <?php
-                          echo  $objetoTabla-> obtenerCajeroCombobox();
-                      ?>
-                     </select>
-                </div>
+                }
+            }else{
 
-                <div class="col-2">
-                <label  class="form-label">Seleccionar Empleado (cajero)</label>
-                </div>
-                <div class="col-4">
-                <select name="cbmempleado" id="cbmempleado"  class="form-control">
-                          <option value="0" disabled selected > Seleccionar</option>
-                    <?php
-                            echo  $objetoTabla-> obtenerCajeroCombobox();
-                      ?>
-             </select>
-            </div>
-            </div><br>
-            <div class="row ">
-                 <div class="col-2">
-                    <label  class="form-label">Ruta</label>
-                </div>         
-                <div class="col-4">         
-                    <select name="cmbRuta" id="cmbRuta"  class="form-control"> 
-                        <option value="0" disabled selected > Seleccionar ruta</option>
-                        <?php
-                            echo  $objetoTabla-> obtenerRutasCombobox();
-                        ?>
+                $cadena="id=x&accion=1&dir=addeditFactura&u=1";
+
+            echo "
+            <form name='formulario' id='formulario' method='POST' action='acciones.php?" . $cadena . "'> <br><br>
+                        
+                        <div class='row '>
+                        <div class='col-2 '>
+                        <label  class='form-label '>Numero de Factura</label>
+                            </div>
+                        <div class='col-4'>
+                            <input class='form-control'   name='numer_factura' id='numer_factura' type='text'  aria-label='default input example'>
+                        </div>
+
+                        <div class='col-2'>
+                            <label  class='form-label'>Fecha Factura</label>
+                        </div>
+                        <div class='col-4'>
+                            <input class='form-control'   name='fecha_factura' id='fecha_factura' type='date'  aria-label='default input example'>
+                        </div>
+                    </div><br>
+
+                    <div class='row '>
+                            <div class='col-2'>
+                                <label  class='form-label'>Cliente</label>
+                            </div>
+                            <div class='col-4'>
+                            <select name='cbmcliente' id='cbmcliente'  class='form-control'>
+                                <option value='0' disabled selected > Seleccionar</option>
+                                ";
+                                echo  $objetoTabla-> obtenerClientesCombobox();
+                            echo "
+                            </select>
+                        </div>
+
+                        <div class='col-2'>
+                        <label  class='form-label'>Empleado (cajero)</label>
+                        </div>
+                        <div class='col-4'>
+                        <select name='cbmempleado' id='cbmempleado'  class='form-control'>
+                                <option value='0' disabled selected > Seleccionar</option>
+                                ";
+                                    echo  $objetoTabla-> obtenerCajeroCombobox();
+                                    echo "
                     </select>
-                </div>
-                <div class="col-2">
-                    <label  class="form-label">Cantidad de Boleto</label>
-                </div>
-                <div class="col-4">
-                    <input class="form-control"   name="txtCantidad" id="txtCantidad" type="number"  aria-label="default input example">
-                </div>
+                    </div>
+                    </div><br>
+                    <div class='row '>
+                        <div class='col-2'>
+                            <label  class='form-label'>Ruta</label>
+                        </div>         
+                        <div class='col-4'>         
+                            <select name='cmbRuta' id='cmbRuta'  class='form-control'> 
+                                <option value='0' disabled selected > Seleccionar ruta</option>
+                                ";
+                                    echo  $objetoTabla-> obtenerRutasCombobox();
+                                    echo "
+                            </select>
+                        </div>
+                        <div class='col-2'>
+                            <label  class='form-label'>Cantidad de Boleto</label>
+                        </div>
+                        <div class='col-4'>
+                            <input class='form-control'   name='txtCantidad' id='txtCantidad' type='number'  aria-label='default input example'>
+                        </div>
 
-            </div><br><br>
-            <div class="row ">
-                <h4 align="center">TABLA DE PRECIOS</h4>
-                <div class='col-12'>
-                    <?php                  
-                        echo $objetoTabla->CargarTablaRuta();
-                    ?>  
+                    </div><br><br>
+                    <div class='row '>
+                        <h4 align='center'>TABLA DE PRECIOS</h4>
+                        <div class='col-12'>
+                        ";                
+                                echo $objetoTabla->CargarTablaRuta();
+                                echo " 
+                        
+                        </div> 
+                    </div>
+
+
+                <div class='row justify-content-center' style='padding-top:40px; margin:auto;'>
                 
-                </div> 
+                <div class='col-4'>
+                    <button class='btn btn-primary' onClick='return guardar()'>GUARDAR</button>
+                </div>
             </div>
+            </form>
+            
+            ";
 
-
-        <div class="row justify-content-center" style="padding-top:40px; margin:auto;">
-         
-          <div class="col-4">
-              <button class="btn btn-primary" type="button"  onClick="return eliminar()">CANCELAR</button>
-              <button class="btn btn-primary" onClick="return guardarClientes()">GUARDAR</button>
-          </div>
-       </div>
-    </form>
+            }
+        ?>
     </div>
 </div>
 

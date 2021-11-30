@@ -92,6 +92,10 @@
                 }elseif(($_GET['accion']==3)&&($_GET['dir']=='addediTipoPaquete')){
                     eliminarTipoPaquete();
                 } 
+                //Guardar Factura Boleto
+                elseif(($_GET['accion']==1)&&($_GET['dir']=='addeditFactura')){
+                    guardarFacturaBoleto();
+                }
                                    
                 
             }
@@ -1110,5 +1114,71 @@ function eliminarTipoPaquete(){
 
         }
 }
+
+
+//-----------------------------------------------------------------------------------------------------TIPO PAQUETES
+function guardarFacturaBoleto(){
+    include("conexion.php");
+    $sql = "SELECT *  FROM tbl_factura WHERE factura_n_factura = '".$_POST["numer_factura"]."';";
+
+    $validar_registro = mysqli_query($con, $sql);
+
+    if(mysqli_num_rows($validar_registro) <=0){
+        $sql = "
+        INSERT INTO `u391525088_transportweb`.`tbl_factura`
+        (`factura_n_factura`,
+        `factura_fecha`,
+        `cliente_cedula`,
+        `empleado_cedula`)
+        VALUES
+        ('".$_POST["numer_factura"]."',
+        '".$_POST["fecha_factura"]."',
+        '".$_POST["cbmcliente"]."',
+        '".$_POST["cbmempleado"]."');
+        ";
+
+        echo "<script>alert('Datos guardados exitosamente.');</script>";
+    
+   
+        $result=mysqli_query($con,$sql);
+        if($result)
+        {
+            
+
+            $sql = "
+            INSERT INTO `u391525088_transportweb`.`tbl_detalle_factura_boleto`
+            (`detalle_factura_boleto_correlativo`,
+            `numero_factura`,
+            `ruta_codigo`,
+            `detalle_factura_boleto_cantidad`)
+            VALUES
+            ('1',
+            '".$_POST["numer_factura"]."',
+            '".$_POST["cmbRuta"]."',
+            '".$_POST["txtCantidad"]."'
+            );";
+            
+            mysqli_query($con,$sql);//Ejecutar el query
+
+            $dir = "form_factura.php"; //cargar de nuevo el formulario
+            header ('Location: ' . $dir);      
+
+        }else
+        {
+            echo "Error no se puede ejecutar ".$sql." Error ".mysqli_error($con);
+            $dir = "form_factura.php"; 
+            header ('Location: ' . $dir);  
+
+        }
+
+    }
+    else{
+        echo "<script>alert('El numero de factura ya existe');</script>";
+        $dir = "form_factura.php"; 
+        header ('Location: ' . $dir);  
+    }   
+
+}
+
 
 ?>
