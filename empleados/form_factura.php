@@ -134,11 +134,23 @@
                     </div>
 
 
+
                 <div class='row justify-content-center' style='padding-top:40px; margin:auto;'>
                 
-                <div class='col-4'>
-                    <button class='btn btn-primary' onClick='return guardar()'>GUARDAR</button>
+                <div class='col-5'>
+                    <button class='btn btn-primary' onClick='return guardar()'>GUARDAR</button> <br><br>
                 </div>
+                
+                <div class='row'>
+                
+                <h4 align='center'>LISTADO DE FACTURA DE BOLETERIA</h4>
+                <div class='col-12'>
+                ";                
+                        echo $objetoTabla->CargarTablaFacturaBoleto();
+                        echo " 
+                
+                </div> 
+            </div>
             </div>
             </form>
             

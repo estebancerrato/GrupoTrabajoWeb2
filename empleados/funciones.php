@@ -106,6 +106,69 @@
             ";
 
         }
+        function CargarTablaFacturaBoleto(){
+
+            include("conexion.php");
+            $sql ="
+            SELECT `vista_DatosFactura`.`numerofactura`,
+            `vista_DatosFactura`.`fechafactura`,
+            `vista_DatosFactura`.`ClienteNombre`,
+            `vista_DatosFactura`.`CajeroNombre`,
+            `vista_DatosFactura`.`nombreRuta`,
+            `vista_DatosFactura`.`distancia`,
+            `vista_DatosFactura`.`PrecioRuta`,
+            `vista_DatosFactura`.`CantidadBoleto`,
+            `vista_DatosFactura`.`SubTotal`,
+            `vista_DatosFactura`.`ISV15`,
+            `vista_DatosFactura`.`Total`
+            FROM `u391525088_transportweb`.`vista_DatosFactura`;
+            ";
+            $query = mysqli_query($con, $sql)
+            or die('error: '.mysqli_error($con));           
+                  
+            echo " 
+            <table id='tablaFacturaBoleto'  class='table table-responsive table-striped'>
+                <thead>
+                    <tr>
+                        <th scope='col'>Nº Factura</th>
+                        <th scope='col'>Fecha Factura</th>
+                        <th scope='col'>Cliente</th>  
+                        <th scope='col'>Empleado (CAJERO)</th>
+                        <th scope='col'>Ruta</th>
+                        <th scope='col'>Distancia</th>
+                        <th scope='col'>Precio</th>
+                        <th scope='col'>Cantidad Boleto</th>
+                        <th scope='col'>Imprimir</th>
+                    </tr>
+                </thead>
+                <tbody>      
+            ";            
+           
+            while($data = mysqli_fetch_assoc($query)){
+                echo "
+                <tr>
+                    <form action='form_usuario.php?id=$data[numerofactura]' method='POST' name='form2'>
+                        
+                        <th scope='row'>$data[numerofactura]</th>    
+                        <td>$data[fechafactura]</td>
+                        <td>$data[ClienteNombre]</td>
+                        <td>$data[CajeroNombre]</td>
+                        <td>$data[nombreRuta]</td>
+                        <td>$data[distancia]</td>
+                        <td>$data[PrecioRuta]</td>
+                        <td>$data[CantidadBoleto]</td>
+                        <td><a class='btn btn-primary' href='acciones.php?accion=3&dir=addeditUsuario&id=$data[numerofactura]&u=1' onclick='return confirm(\"Desea Imprimir la Factura: $data[numerofactura]\");'><i class='icon ion-md-trash'></i></a></td>
+                    </form>
+                </tr>
+                ";
+            }            
+            
+            echo "
+                </tbody>
+            </table>            
+            ";
+
+        }
 
         function CargarTablaCargos(){
 
