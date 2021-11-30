@@ -102,8 +102,10 @@ while($row=mysqli_fetch_assoc($result))
 		
 	
 <?php //aqui tengo que filtrar
+$id = $_GET["id"];
+
 $sql="SELECT *
-FROM `u391525088_transportweb`.`vista_DatosFactura` ;";
+FROM `u391525088_transportweb`.`vista_DatosFactura` WHERE  numerofactura = '$id';";
 $result=mysqli_query($con,$sql);
 
 $x = 0;

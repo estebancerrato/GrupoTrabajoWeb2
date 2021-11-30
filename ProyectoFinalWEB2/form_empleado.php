@@ -48,7 +48,7 @@
             $empleadoID = $_GET['id'];
             $data=($objetoTabla->obtenerEmpleado($empleadoID));  
             
-            $cadena="id=x&accion=2&dir=addeditEmpleado&u=1";
+            $cadena="id=".$empleadoID."&accion=2&dir=addeditEmpleado&u=1";
 
 
         echo 

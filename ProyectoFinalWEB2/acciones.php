@@ -84,7 +84,7 @@
                     eliminarHorarioRutas();
                 } 
 
-                //PAQUETES
+                //TIPO PAQUETES
                 elseif(($_GET['accion']==1)&&($_GET['dir']=='addediTipoPaquete')){
                     guardarTipoPaquete();
                 }elseif(($_GET['accion']==2)&&($_GET['dir']=='addediTipoPaquete')){  
@@ -96,7 +96,15 @@
                 elseif(($_GET['accion']==1)&&($_GET['dir']=='addeditFactura')){
                     guardarFacturaBoleto();
                 }
-                                   
+                 
+                //PAQUETES
+                elseif(($_GET['accion']==1)&&($_GET['dir']=='addeditPaquete')){
+                    guardarPaquete();
+                }elseif(($_GET['accion']==2)&&($_GET['dir']=='addeditPaquete')){  
+                    editarPaquete();
+                }elseif(($_GET['accion']==3)&&($_GET['dir']=='addeditPaquete')){
+                    eliminarPaquete();
+                } 
                 
             }
         }
@@ -151,7 +159,7 @@
     function editarEmpleado(){
 
         include("conexion.php");
-  
+        $id = $_GET["id"];
             $sql= "
             UPDATE `tbl_empleados`
             SET
@@ -166,7 +174,7 @@
             `cargo_codigo` = '".$_POST["cmbcargo"]."',
             `empleado_fecha_ingreso` = '".$_POST["dfechaIngre"]."',
             `empleado_observacion` = '".$_POST["txtobser"]."' 
-            WHERE `empleado_cedula` = '".$_POST["cedula"]."' ";      
+            WHERE `empleado_cedula` = '$id' ";      
         
             $result=mysqli_query($con,$sql);
             if($result)
@@ -1181,4 +1189,103 @@ function guardarFacturaBoleto(){
 }
 
 
+//----------------------------------------------------------------------------------------------------------PAQUETE
+function guardarPaquete(){
+
+    include("conexion.php");
+        
+    $sql= "INSERT INTO tbl_paquetes
+            (bus_codigo,
+            cliente_cedula,
+            paquete_descripcion,
+            paquete_peso_libras,
+            tipo_paquete_codigo,
+            paquete_fecha_hora_envio,
+            paquete_fecha_hora_entrega,
+            paquete_estado) 
+                VALUES(   
+            '".$_POST["cmb_buses"]."',
+            '".$_POST["cmb_clientes"]."',
+            '".$_POST["observaciones"]."',    
+            '".$_POST["speso"]."',
+            '".$_POST["cmb_tipo_paquetes"]."',
+            '".$_POST["fechaenvio"]."',
+            '".$_POST["fechaentrega"]."',
+            '".$_POST["scmb_estado"]."'
+            )";  
+
+
+    $result=mysqli_query($con,$sql);
+    if($result)
+    {
+        echo "<script>alert('Datos guardados exitosamente.');</script>";
+        $dir = "form_paquetes.php"; //cargar de nuevo el formulario de form_usuario
+        header ('Location: ' . $dir);      
+
+    }else
+    {
+        echo "Error no se puede ejecutar ".$sql." Error ".mysqli_error($con);
+        $dir = "form_paquetes.php"; 
+        header ('Location: ' . $dir);  
+
+    }    
+
+}
+
+function editarPaquete(){
+    $id = $_GET["id"];
+    include("conexion.php");
+        
+    $sql= "UPDATE tbl_paquetes SET
+            bus_codigo = '".$_POST["cmb_buses"]."',
+            cliente_cedula = '".$_POST["cmb_clientes"]."',
+            paquete_descripcion = '".$_POST["observaciones"]."',
+            paquete_peso_libras = '".$_POST["speso"]."',
+            tipo_paquete_codigo = '".$_POST["cmb_tipo_paquetes"]."',
+            paquete_fecha_hora_envio = '".$_POST["fechaenvio"]."',
+            paquete_fecha_hora_entrega = '".$_POST["fechaentrega"]."',
+            paquete_estado = '".$_POST["scmb_estado"]."'
+            WHERE paquete_codigo = $id
+            ";  
+
+
+    $result=mysqli_query($con,$sql);
+    if($result)
+    {
+        echo "<script>alert('Datos guardados exitosamente.');</script>";
+        $dir = "form_paquetes.php"; //cargar de nuevo el formulario de form_usuario
+        header ('Location: ' . $dir);      
+
+    }else
+    {
+        echo "Error no se puede ejecutar ".$sql." Error ".mysqli_error($con);
+        $dir = "form_paquetes.php"; 
+        header ('Location: ' . $dir);  
+
+    }    
+
+}
+
+function eliminarPaquete(){
+    include("conexion.php");
+
+    $id = $_GET["id"];
+   
+        $sql= "DELETE FROM tbl_paquetes WHERE paquete_codigo = $id ";      
+    
+        $result=mysqli_query($con,$sql);
+        if($result)
+        {
+            echo "<script>alert('Datos Eliminados exitosamente.');</script>";
+            $dir = "form_paquetes.php"; //cargar de nuevo el formulario 
+            header ('Location: ' . $dir);      
+
+        }else
+        {
+            echo "Error no se puede ejecutar ".$sql." Error ".mysqli_error($con);
+            $dir = "form_paquetes.php"; 
+            header ('Location: ' . $dir);  
+
+        }    
+} 
 ?>

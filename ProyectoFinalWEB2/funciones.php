@@ -147,7 +147,7 @@
             while($data = mysqli_fetch_assoc($query)){
                 echo "
                 <tr>
-                    <form action='form_usuario.php?id=$data[numerofactura]' method='POST' name='form2'>
+                    <form action='form_factura.php' method='POST' name='form2'>
                         
                         <th scope='row'>$data[numerofactura]</th>    
                         <td>$data[fechafactura]</td>
@@ -157,7 +157,7 @@
                         <td>$data[distancia]</td>
                         <td>$data[PrecioRuta]</td>
                         <td>$data[CantidadBoleto]</td>
-                        <td><a class='btn btn-primary' href='acciones.php?accion=3&dir=addeditUsuario&id=$data[numerofactura]&u=1' onclick='return confirm(\"Desea Imprimir la Factura: $data[numerofactura]\");'><i class='icon ion-md-trash'></i></a></td>
+                        <td><a class='btn btn-primary' href='reporte.php?id=$data[numerofactura]' onclick='return confirm(\"Desea Imprimir la Factura: $data[numerofactura]\");'><i class='icon ion-md-print'></i></a></td>
                     </form>
                 </tr>
                 ";
@@ -591,7 +591,7 @@
                         <td>$data[paquete_fecha_hora_entrega]</td>
                         <td>$data[paquete_estado]</td>
                         <td><button class='btn btn-primary' type='submit' name='accion' value='2'><i class='icon ion-md-create'></i></button></td>
-                        <td><a class='btn btn-primary' href='acciones.php?accion=3&dir=addediPaquete&id=$data[paquete_codigo]&u=1' onclick='return confirm(\"Desea eliminar el paquete: $data[paquete_codigo]\");'><i class='icon ion-md-trash'></i></a></td>
+                        <td><a class='btn btn-primary' href='acciones.php?accion=3&dir=addeditPaquete&id=$data[paquete_codigo]&u=1' onclick='return confirm(\"Desea eliminar el paquete: $data[paquete_codigo]\");'><i class='icon ion-md-trash'></i></a></td>
                     </form>
                 </tr>
                 ";
@@ -652,6 +652,7 @@
             ";
     
         }
+ 
 
 //------------------------------------------------------------------------------------------------------
         public function obtenerEmpleado($empleadoID){
@@ -807,6 +808,28 @@
             return $data;
 
         }
+
+
+        
+        public function obtenerPaquete($paqueteID){
+            include 'conexion.php';      
+            $sql = "SELECT 
+                    A.paquete_codigo AS paquete_codigo, A.bus_codigo AS bus_codigo, CONCAT(B.bus_marca,' ',B.bus_modelo, ' ', B.bus_placa) AS BusNombre, A.cliente_cedula AS cliente_cedula, CONCAT(C.cliente_primer_nombre,' ',C.cliente_segundo_nombre,' ',C.cliente_primer_apellido,' ',C.cliente_segundo_apellido) AS ClienteNombre, A.tipo_paquete_codigo AS tipo_paquete_codigo, D.tipo_paquete_nombre AS tipo_paquete_nombre,
+                    A.paquete_peso_libras AS paquete_peso_libras, DATE_FORMAT(A.paquete_fecha_hora_envio,'%Y-%m-%d') AS paquete_fecha_hora_envio, DATE_FORMAT(A.paquete_fecha_hora_entrega,'%Y-%m-%d') AS paquete_fecha_hora_entrega, A.paquete_estado AS paquete_estado, A.paquete_descripcion AS paquete_descripcion
+                    FROM tbl_paquetes AS A
+                    INNER JOIN tbl_buses AS B ON A.bus_codigo = B.bus_codigo
+                    INNER JOIN tbl_clientes C ON A.cliente_cedula = C.cliente_cedula
+                    INNER JOIN tbl_tipo_paquete D ON A.tipo_paquete_codigo = D.tipo_paquete_codigo
+                    WHERE A.paquete_codigo = $paqueteID";
+            $query = mysqli_query($con, $sql)
+            or die('error: '.mysqli_error($con));       
+            
+            
+            $data = mysqli_fetch_assoc($query);
+            //retorna el dataset
+            return $data;
+
+        }   
 
 //-----------------------------COMBOBOX OBTENER DATOS
         function ObtenerCargoCombobox(){
