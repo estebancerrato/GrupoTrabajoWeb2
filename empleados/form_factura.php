@@ -73,18 +73,7 @@
                     <select name="cbmcliente" id="cbmcliente"  class="form-control">
                           <option value="0" disabled selected > Seleccionar</option>
                         <?php
-                          include("conexion.php");
-                          $sql = "select 
-                          cliente_cedula,
-                          concat(cliente_primer_nombre, ' ',cliente_segundo_nombre,' ',cliente_primer_apellido, ' ',cliente_segundo_apellido) as nombres
-                          from tbl_clientes ";
-                          $query = mysqli_query($con, $sql)
-                          or die('error: '.mysqli_error($con));  
-                          while($columna = mysqli_fetch_assoc($query)){
-                          echo "
-                          <option value='".$columna["cliente_cedula"]."'>".$columna["nombres"]."</option>
-                              ";
-                          }
+                          echo  $objetoTabla-> obtenerCajeroCombobox();
                       ?>
                      </select>
                 </div>
@@ -96,20 +85,7 @@
                 <select name="cbmempleado" id="cbmempleado"  class="form-control">
                           <option value="0" disabled selected > Seleccionar</option>
                     <?php
-                          include("conexion.php");
-                          $sql = "select 
-                          empleado_cedula,
-                          concat(empleado_primer_nombre, ' ',empleado_segundo_nombre,' ',empleado_primer_apellido, ' ',empleado_segundo_apellido) as nombres
-                          from tbl_empleados e 
-                          INNER JOIN tbl_cargo c on e.cargo_codigo = c.cargo_codigo
-                          WHERE UPPER(c.cargo_nombre)  = UPPER('CAJERO') ";
-                          $query = mysqli_query($con, $sql)
-                          or die('error: '.mysqli_error($con));  
-                          while($columna = mysqli_fetch_assoc($query)){
-                              echo "
-                              <option value='".$columna["empleado_cedula"]."'>".$columna["nombres"]."</option>
-                              ";
-                          }
+                            echo  $objetoTabla-> obtenerCajeroCombobox();
                       ?>
              </select>
             </div>
